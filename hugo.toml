@@ -1,0 +1,8 @@
+baseURL = 'https://easyatm.github.io/blog/'
+languageCode = 'zh-cn'
+title = '我的极客博客'
+theme = 'PaperMod'  # 声明使用 PaperMod 主题
+
+[params]
+    defaultTheme = "auto"
+    showCodeCopyButtons = true
