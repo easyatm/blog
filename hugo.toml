@@ -1,37 +1,37 @@
 baseURL = 'https://easyatm.github.io/blog/'
 languageCode = 'zh-cn'
-title = '我的极客空间'
+title = 'EasyATM Blog'
 theme = 'hugo-theme-stack'
 
 [params]
     mainSections = ["post"]
-
+    
     [params.sidebar]
         avatar = "https://github.com/easyatm.png"
         title = "EasyATM"
-        subtitle = "极客、开发者、生活记录"
+        subtitle = "极客、开发者"
 
-# 这里的链接要和上面创建的文件夹对应
+# 注意：下面的参数必须用等号 =，且缩进要整齐
 [[menu.main]]
     identifier = "home"
     name = "首页"
     url = "/"
     weight = 1
-    params:
-        icon: home
+    [menu.main.params]
+        icon = "home"
 
 [[menu.main]]
     identifier = "archives"
     name = "归档"
     url = "/archives/"
     weight = 2
-    params:
-        icon: archive
+    [menu.main.params]
+        icon = "archive"
 
 [[menu.main]]
     identifier = "search"
     name = "搜索"
     url = "/search/"
     weight = 3
-    params:
-        icon: search
+    [menu.main.params]
+        icon = "search"
