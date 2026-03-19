@@ -1,46 +1,47 @@
-name: Deploy Hugo site to Pages # 脚本名称：部署 Hugo 站点到 Pages
+name: Deploy Hugo site to Pages
 
 on:
   push:
-    branches: ["main"] # 监听动作：当你向 main 分支推送代码时触发
+    branches: ["main"]
 
-# 设置脚本执行权限
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # 强制使用 Node 24，消除警告
+
 permissions:
-  contents: read # 读取仓库内容的权限
-  pages: write    # 写入 GitHub Pages 的权限
-  id-token: write # 身份验证权限
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  # 任务 1：构建静态网页
   build:
-    runs-on: ubuntu-latest # 在 GitHub 的 Ubuntu 虚拟机上运行
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: recursive # 【关键】递归拉取子模块（即你的主题文件夹）
+          submodules: recursive # 【必须保留】这行负责把 Stack 主题拉下来
+          fetch-depth: 0        # 获取所有历史，Stack 主题有些功能（如最后修改时间）需要它
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: 'latest' # 使用最新版 Hugo
-          extended: true         # 开启 Extended 版（支持 SCSS/SASS 等主题特效）
+          hugo-version: 'latest'
+          extended: true         # 【必须保留】Stack 主题需要扩展版处理 CSS
 
       - name: Build
-        run: hugo --minify      # 执行 Hugo 编译命令，并压缩混淆代码以提速
+        run: hugo --minify
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public        # 将生成的静态网页文件夹（public）打包上传
+          path: ./public
 
-  # 任务 2：正式发布
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build                # 必须等待 build 任务成功后才开始执行
+    needs: build
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4 # 调用官方插件，将打包好的网页发布到服务器
+        uses: actions/deploy-pages@v4
