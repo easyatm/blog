@@ -1,3 +1,17 @@
+baseURL = 'https://easyatm.github.io/blog/'
+languageCode = 'zh-cn'
+title = 'EasyATM Blog'
+theme = 'hugo-theme-stack'
+
+[params]
+    mainSections = ["post"]
+    
+    [params.sidebar]
+        avatar = "https://github.com/easyatm.png"
+        title = "EasyATM"
+        subtitle = "极客、开发者"
+
+# 注意：下面的参数必须用等号 =，且缩进要整齐
 [[menu.main]]
     identifier = "home"
     name = "首页"
